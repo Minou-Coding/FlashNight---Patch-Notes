@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FlashNight - Patch Notes</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
+
+        :root {
+            --primary-color: #00c3ff;
+            --secondary-color: #05e0ff;
+            --background-color: #001430;
+            --dark-blue: #000e24;
+            --light-blue: #0055ff;
+            --text-color: #ffffff;
+        }
+
+        body {
+            background-color: var(--background-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(0, 85, 255, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 90% 30%, rgba(0, 85, 255, 0.07) 0%, transparent 40%),
+                radial-gradient(circle at 50% 80%, rgba(0, 195, 255, 0.05) 0%, transparent 50%);
+            overflow-x: hidden;
+        }
+
+        /* Animation circulaire */
+        .circle {
+            position: absolute;
+            border: 2px solid var(--light-blue);
+            border-radius: 50%;
+            opacity: 0.15;
+            z-index: -1;
+        }
+
+        .circle-1 {
+            width: 150px;
+            height: 150px;
+            top: 100px;
+            left: 200px;
+            animation: pulse 15s infinite alternate;
+        }
+
+        .circle-2 {
+            width: 200px;
+            height: 200px;
+            top: 80px;
+            left: 180px;
+            animation: pulse 20s infinite alternate-reverse;
+        }
+
+        .circle-3 {
+            width: 180px;
+            height: 180px;
+            bottom: 120px;
+            right: 200px;
+            animation: pulse 18s infinite alternate;
+        }
+
+        .circle-4 {
+            width: 250px;
+            height: 250px;
+            bottom: 100px;
+            right: 180px;
+            animation: pulse 25s infinite alternate-reverse;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            background-color: rgba(0, 14, 36, 0.7);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(0, 195, 255, 0.3);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo {
+            width: 80px;
+            height: 80px;
+            margin-right: 20px;
+        }
+
+        .title {
+            font-size: 28px;
+            font-weight: 600;
+            color: var(--primary-color);
+            text-shadow: 0 0 10px rgba(0, 195, 255, 0.5);
+        }
+
+        .subtitle {
+            font-size: 16px;
+            font-weight: 300;
+            margin-top: 5px;
+        }
+
+        nav {
+            display: flex;
+        }
+
+        .nav-item {
+            margin: 0 15px;
+            cursor: pointer;
+            font-weight: 500;
+            padding: 10px;
+            transition: all 0.3s ease;
+            border-bottom: 2px solid transparent;
+            text-decoration: none;
+            color: var(--text-color);
+        }
+
+        .nav-item:hover, .nav-item.active {
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--primary-color);
+        }
+
+        main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .card {
+            background-color: rgba(0, 14, 36, 0.7);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(0, 195, 255, 0.2);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(0, 195, 255, 0.4);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(0, 195, 255, 0.2);
+        }
+
+        .card-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        .card-date {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .card-content {
+            line-height: 1.6;
+        }
+
+        .tag {
+            display: inline-block;
+            background-color: rgba(0, 85, 255, 0.3);
+            padding: 3px 10px;
+            border-radius: 50px;
+            font-size: 12px;
+            margin-right: 5px;
+        }
+
+        .btn {
+            background: linear-gradient(90deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: var(--dark-blue);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-block;
+            margin-top: 15px;
+            text-decoration: none;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 195, 255, 0.4);
+        }
+
+        .patch-version {
+            background-color: rgba(0, 85, 255, 0.2);
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            display: inline-block;
+        }
+
+        .patch-item {
+            margin-bottom: 10px;
+            display: flex;
+        }
+
+        .patch-item:before {
+            content: "•";
+            color: var(--primary-color);
+            margin-right: 10px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+            border-top: 1px solid rgba(0, 195, 255, 0.2);
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                padding: 15px;
+            }
+
+            .logo-container {
+                margin-bottom: 15px;
+            }
+
+            nav {
+                width: 100%;
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+
+            .nav-item {
+                margin: 5px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Cercles d'animation de fond -->
+    <div class="circle circle-1"></div>
+    <div class="circle circle-2"></div>
+    <div class="circle circle-3"></div>
+    <div class="circle circle-4"></div>
+
+    <header>
+        <div class="logo-container">
+            <img src="https://i.ibb.co/0p1QMzKH/7f933f6ef04e.png" alt="FlashNight Logo" class="logo">
+            <div>
+                <h1 class="title">FlashNight - Panneau Pocket</h1>
+                <p class="subtitle">Découvre les informations et actualités de la ville !</p>
+            </div>
+        </div>
+        <nav>
+            <a href="index.html" class="nav-item">Accueil</a>
+            <a href="patches.html" class="nav-item active">Patch Notes</a>
+            <a href="informations.html" class="nav-item">Informations</a>
+            <a href="evenements.html" class="nav-item">Événements</a>
+        </nav>
+    </header>
+
+    <main>
+        <h2 class="card-title" style="margin-bottom: 20px;">Historique des mises à jour</h2>
+        
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Mise à jour 3.5.2</h3>
+                <span class="card-date">18 juin 2025</span>
+            </div>
+            <div class="card-content">
+                <span class="tag">Ajouts</span>
+                <span class="tag">Corrections</span>
+                <span class="tag">Optimisation</span>
+                <br><br>
+                <div class="patch-item">Ajout de 5 nouveaux véhicules dans les concessionnaires (Lamborghini Huracan, Ferrari 488, Audi RS7, BMW M5, Mercedes AMG GT)</div>
+                <div class="patch-item">Optimisation des performances serveur pour réduire les lags lors des heures de pointe</div>
+                <div class="patch-item">Nouvelle mission de braquage disponible au Casino avec un butin max de 500,000$</div>
+                <div class="patch-item">Correction du bug d'animation sur certains métiers (pompier, éboueur)</div>
+                <div class="patch-item">Rééquilibrage des salaires des métiers légaux</div>
+                <div class="patch-item">Ajout de nouvelles tenues pour la police et les ambulanciers</div>
+                <div class="patch-item">Correction des collisions sur certains bâtiments custom</div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Mise à jour 3.5.1</h3>
+                <span class="card-date">5 juin 2025</span>
+            </div>
+            <div class="card-content">
+                <span class="tag">Corrections</span>
+                <span class="tag">Améliorations</span>
+                <br><br>
+                <div class="patch-item">Correction du bug empêchant certains joueurs de se connecter après la mise à jour 3.5.0</div>
+                <div class="patch-item">Amélioration du système de téléphone (ajout d'applications, correction des bugs d'appels)</div>
+                <div class="patch-item">Correction du bug d'inventaire qui dupliquait certains items</div>
+                <div class="patch-item">Résolution des problèmes de chargement des textures sur certains véhicules</div>
+                <div class="patch-item">Optimisation des scripts pour améliorer les FPS globaux</div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Mise à jour majeure 3.5.0</h3>
+                <span class="card-date">1 juin 2025</span>
+            </div>
+            <div class="card-content">
+                <span class="tag">Majeur</span>
+                <span class="tag">Ajouts</span>
+                <span class="tag">Refonte</span>
+                <br><br>
+                <div class="patch-item">Refonte complète du système d'économie</div>
+                <div class="patch-item">Ajout d'un nouveau quartier dans la ville avec ses commerces et activités</div>
+                <div class="patch-item">Nouveau système de gang avec territoires et guerres de gangs</div>
+                <div class="patch-item">Amélioration du système météo avec des événements climatiques aléatoires</div>
+                <div class="patch-item">Ajout de 10 nouveaux appartements à acheter</div>
+                <div class="patch-item">Refonte du système de permis (permis de conduire, permis d'armes, etc.)</div>
+                <div class="patch-item">Nouveau métier : Avocat, avec système judiciaire complet</div>
+                <div class="patch-item">Refonte du système de prison avec activités carcérales</div>
+                <div class="patch-item">Ajout de 15 nouveaux véhicules</div>
+                <div class="patch-item">Amélioration des animations et des sons</div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Mise à jour 3.4.2</h3>
+                <span class="card-date">15 mai 2025</span>
+            </div>
+            <div class="card-content">
+                <span class="tag">Corrections</span>
+                <span class="tag">Équilibrage</span>
+                <br><br>
+                <div class="patch-item">Correction de divers bugs mineurs signalés par la communauté</div>
+                <div class="patch-item">Équilibrage des prix des armes illégales</div>
+                <div class="patch-item">Ajustement des temps de production des drogues</div>
+                <div class="patch-item">Correction d'un exploit permettant de dupliquer des objets</div>
+                <div class="patch-item">Amélioration de la stabilité du serveur</div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Mise à jour 3.4.1</h3>
+                <span class="card-date">5 mai 2025</span>
+            </div>
+            <div class="card-content">
+                <span class="tag">Corrections</span>
+                <span class="tag">Améliorations</span>
+                <br><br>
+                <div class="patch-item">Correction des problèmes de connexion pour certains joueurs</div>
+                <div class="patch-item">Amélioration des performances du serveur</div>
+                <div class="patch-item">Résolution de bugs visuels sur certains vêtements</div>
+                <div class="patch-item">Correction d'erreurs dans les dialogues de PNJ</div>
+                <div class="patch-item">Amélioration du système de boutique</div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Mise à jour majeure 3.4.0</h3>
+                <span class="card-date">1 mai 2025</span>
+            </div>
+            <div class="card-content">
+                <span class="tag">Majeur</span>
+                <span class="tag">Ajouts</span>
+                <span class="tag">Amélioration</span>
+                <br><br>
+                <div class="patch-item">Ajout du nouveau système de craft pour armes et objets</div>
+                <div class="patch-item">Nouveau métier : Fabricant d'armes avec atelier dédié</div>
+                <div class="patch-item">Refonte du système de téléphone avec nouvelles applications</div>
+                <div class="patch-item">Ajout d'un réseau social in-game pour les joueurs</div>
+                <div class="patch-item">Système de réputation par quartier et faction</div>
+                <div class="patch-item">Ajout de 8 nouveaux véhicules customisables</div>
+                <div class="patch-item">Nouveau système de customisation des habitations</div>
+                <div class="patch-item">Amélioration des animations faciales lors des dialogues</div>
+                <div class="patch-item">Nouvelles missions secondaires pour gagner de l'argent</div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>© 2025 FlashNight RP - Tous droits réservés</p>
+        <p>Développé avec ❤️ par l'équipe FlashNight</p>
+    </footer>
+
+    <script>
+        // Animation des cercles en arrière-plan
+        function animateCircles() {
+            const circles = document.querySelectorAll('.circle');
+            
+            circles.forEach((circle, index) => {
+                const randomX = Math.random() * 10 - 5;
+                const randomY = Math.random() * 10 - 5;
+                
+                setTimeout(() => {
+                    circle.style.transform = `translate(${randomX}px, ${randomY}px)`;
+                }, index * 100);
+            });
+            
+            setTimeout(animateCircles, 5000);
+        }
+        
+        // Démarrer l'animation des cercles
+        animateCircles();
+    </script>
+</body>
+</html>
